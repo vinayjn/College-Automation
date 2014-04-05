@@ -3,7 +3,7 @@
     Created on : Mar 22, 2014, 11:36:28 PM
     Author     : Stark
 --%>
-<%@include file="initcomps/session.jsp" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

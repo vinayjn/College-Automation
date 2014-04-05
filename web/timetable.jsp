@@ -4,7 +4,7 @@
     Author     : Stark
 --%>
 
-<%@include file="initcomps/session.jsp" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -4,7 +4,7 @@
     Author     : Stark
 --%>
 
-<%@include file="initcomps/session.jsp" %>
+
 <%
     session.setAttribute("page", "assignment");
     //To give value to processImage()

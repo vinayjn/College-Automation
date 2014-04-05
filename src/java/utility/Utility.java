@@ -40,6 +40,8 @@ public class Utility {
         
         String db = "college_"+dept;
         Connection con = openConnection(db);
+        if(con==null)
+            return false;
         Statement stat;
         ResultSet rs;
         String sql = "select * from user_login where userid='"+userid+"' && password='"+password+"' && role='"+role+"'";
@@ -48,11 +50,12 @@ public class Utility {
             rs = stat.executeQuery(sql);
             if(rs.next())
                 return true;
+            else
+                return false;
             
         } catch (SQLException ex) {
             return false;
         }
-        return false;
     }
     
     public static boolean createNewBatch(String dept, String filename){

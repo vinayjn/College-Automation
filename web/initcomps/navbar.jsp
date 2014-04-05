@@ -1,6 +1,7 @@
+<%@include file="session.jsp" %>
 <%
-    String dept = (String) session.getAttribute("dept");
-    String role = (String) session.getAttribute("role");
+    String department = (String) session.getAttribute("dept");
+    String roles = (String) session.getAttribute("role");
 %> 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
@@ -11,7 +12,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home.jsp"><% out.print(role.toUpperCase());%></a>
+            <a class="navbar-brand" href="home.jsp"><% if(roles!=null) out.print(roles.toUpperCase());%></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -36,8 +37,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="home.jsp"><% if (role != null || dept != null) {
-                    out.print(dept.toUpperCase() + " " + role.toUpperCase());
+                <li><a href="home.jsp"><% if (roles != null || department != null) {
+                    out.print(department.toUpperCase() + " " + role.toUpperCase());
                 }%></a></li>
                 <li><a href="logout.jsp"></span>Logout&nbsp;<span class="glyphicon glyphicon-off">&nbsp;</a></li>
             </ul>
