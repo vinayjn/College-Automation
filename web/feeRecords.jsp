@@ -4,11 +4,6 @@
     Author     : Stark
 --%>
 
-
-<%
-    session.setAttribute("page", "feeRecords");
-    //To give value to processImage()
-%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
