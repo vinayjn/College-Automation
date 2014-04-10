@@ -30,6 +30,7 @@ public class login extends HttpServlet {
         String dept = request.getParameter("dept");
         String role = request.getParameter("role");
         boolean status = Utility.checkLogin(userid, password,role,dept);
+        System.out.println("Login.java Status from datavase : "+status);
         HttpSession session = request.getSession();
         if(status){
             session.setAttribute("userid", userid);
@@ -37,7 +38,10 @@ public class login extends HttpServlet {
             session.setAttribute("dept", dept);
             response.sendRedirect("./home.jsp");
         }
-        else
+        else{
+            System.out.println("Else Returned message 0");
             response.sendRedirect("./index.jsp?msg=0");
+            
+        }
     }
 }

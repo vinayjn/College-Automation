@@ -27,7 +27,7 @@ public class Utility {
     public static Connection openConnection(String sqldb) {
         Connection con;
         String sqlusername = "root";
-        String sqlpassword = "PWD4#recr";
+        String sqlpassword = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + sqldb, sqlusername, sqlpassword);
@@ -35,6 +35,58 @@ public class Utility {
         } catch (ClassNotFoundException ex) {
             return null;
         } catch (SQLException ex) {
+            return null;
+        }
+    }
+    public static ArrayList<ResultSet> fetchResultSubjectDetail(String yop, String semester, String dept) {
+
+        ArrayList<ResultSet> detail = new ArrayList<ResultSet>();
+        String db = "college_" + dept;
+        
+        Connection con = openConnection(db);
+        if (con == null) {
+            return null;
+        }
+        Statement stat;
+        ResultSet rs;
+        try {
+            String sql = "select name,enrollment from student_details where yop='" + yop + "' " ;
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            detail.add(rs);
+            sql = "select subject from subjects where yop='" + yop + "' AND semester='" + semester + "'";
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            detail.add(rs);
+            return detail;
+        } catch (SQLException e) {
+            System.out.print(e);
+            return null;
+        }
+    }
+    public static ArrayList<ResultSet> fetchIndividualDetail(String eno,String yop, String semester, String dept) {
+
+        ArrayList<ResultSet> detail = new ArrayList<ResultSet>();
+        String db = "college_" + dept;
+        
+        Connection con = openConnection(db);
+        if (con == null) {
+            return null;
+        }
+        Statement stat;
+        ResultSet rs;
+        try {
+            String sql = "select name,enrollment from student_details where yop='" + yop + "' AND enrollment='"+eno+"'";
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            detail.add(rs);
+            sql = "select subject from subjects where yop='" + yop + "' AND semester='" + semester + "'";
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            detail.add(rs);
+            return detail;
+        } catch (SQLException e) {
+            System.out.print(e);
             return null;
         }
     }
@@ -86,6 +138,62 @@ public class Utility {
         } catch (SQLException ex) {
             System.out.println(ex);
             return false;
+        }
+    }
+     public static boolean updateResult(String sql, String dept) {
+        try {
+            String db = "college_" + dept;
+            Connection con = openConnection(db);
+            if (con == null) {
+                return false;
+            }
+            Statement stat = con.createStatement();
+            int i=stat.executeUpdate(sql);
+            if(i>0)
+            return true;
+            
+            return false;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return false;
+        }
+    }
+     public static ResultSet fetchResults(String sem,String batch,String dept) {
+
+        String db = "college_" + dept;
+        Connection con = openConnection(db);
+        if (con == null) {
+            return null;
+        }
+        Statement stat;
+        ResultSet rs;
+        String sql = "select * from result_analysis where yop='" + batch + "' && semester='" + sem +"'";
+        try {
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            return rs;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+     public static ResultSet fetchIndividualResults(String eno,String sem,String batch,String dept) {
+
+        String db = "college_" + dept;
+        Connection con = openConnection(db);
+        if (con == null) {
+            return null;
+        }
+        Statement stat;
+        ResultSet rs;
+        String sql = "select * from result_analysis where yop='" + batch + "' and semester='" + sem +"' and enrollment='" + eno +"'";
+        try {
+            stat = con.createStatement();
+            rs = stat.executeQuery(sql);
+            return rs;
+
+        } catch (SQLException ex) {
+            return null;
         }
     }
     public static boolean checkLogin(String userid, String password, String role, String dept) {
@@ -146,7 +254,6 @@ public class Utility {
                 System.out.print(list.size());
                 String sql = "insert into student_details values('" + list.get(0) + "','" + list.get(1) + "','" + list.get(2) + "','" + list.get(3) + "','" + list.get(4) + "','" + list.get(5) + "','" + list.get(6) + "','" + list.get(7) + "','" + list.get(8) + "','" + list.get(9) + "','" + list.get(10) + "','" + list.get(11) + "','" + list.get(12) + "','" + list.get(13) + "','" + list.get(14) + "','" + list.get(15) + "','" + list.get(16) + "','" + list.get(17) + "','" + list.get(18) + "','" + list.get(19) + "','" + list.get(20) + "','xyz','" + list.get(21) + "')";
                 stat.executeUpdate(sql);
-                System.out.println("");
             }
             file.close();
             return true;
