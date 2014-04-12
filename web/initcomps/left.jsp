@@ -9,8 +9,10 @@
             <li><a href="createBatch.jsp">Create New Batch</a></li>
             <li><a href="invalidateBatch.jsp">Invalidate Batch</a></li>
             <li><a href="feedResult.jsp">Feed Results</a></li>
+            <li><a href="feedMidsemResult.jsp">Feed MidSem Results</a></li>
             <li><a href="analyzeResult.jsp">Analyze Results</a></li>
             <li><a href="updateResult.jsp">Update Results</a></li>
+             <li><a href="feedAttendance.jsp">Feed Attendance</a></li>
           </ul>
         </div>
         </div>

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,10 +28,11 @@ public class Utility {
     public static Connection openConnection(String sqldb) {
         Connection con;
         String sqlusername = "root";
-        String sqlpassword = "";
+        String sqlpassword = "root";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + sqldb, sqlusername, sqlpassword);
+           
             return con;
         } catch (ClassNotFoundException ex) {
             return null;
@@ -63,6 +65,29 @@ public class Utility {
             System.out.print(e);
             return null;
         }
+    }
+    public static ResultSet getInfo(String yop,String dept) throws SQLException, ClassNotFoundException{
+        String db = "college_"+dept;
+        Connection con=openConnection(db);
+        
+        PreparedStatement ps=con.prepareStatement("select name,enrollment from student_details where yop=?");
+        ps.setString(1,yop);
+        
+        ResultSet rs = ps.executeQuery();
+        return rs;
+       
+    }
+    public static boolean feedAttendance(String dept,String eno,String yop,String sem,String month,int attd) throws SQLException{
+       String db = "college_" + dept;
+        
+        Connection con = openConnection(db);
+        if (con == null) {
+            return false;
+        } 
+        Statement stat=con.createStatement();
+        String sql="update attendance set attd ="+attd+" where eno='"+eno+"' AND yop='"+yop+"' AND sem='"+sem+"' AND month='"+month+"'";
+        stat.executeUpdate(sql);
+        return true;
     }
     public static ArrayList<ResultSet> fetchIndividualDetail(String eno,String yop, String semester, String dept) {
 
@@ -132,13 +157,50 @@ public class Utility {
                 return false;
             }
             Statement stat = con.createStatement();
-            System.out.println("statement");
+            
             stat.executeUpdate(sql);
             return true;
         } catch (SQLException ex) {
             System.out.println(ex);
             return false;
         }
+    }
+    public static boolean initAttendance(String dept,String yop,String month,String sem,int count) throws SQLException{
+        String db = "college_" + dept;
+        Connection con = openConnection(db);
+        if (con == null) {
+            return false;
+        }
+        // initialize lecture count for given month
+        PreparedStatement ps=con.prepareStatement("insert into attendance_lecture_count values(?,?,?,?)");
+        ps.setString(1, yop);
+        ps.setString(2,sem);
+        ps.setString(3,month);
+        ps.setInt(4, count);
+        int i=ps.executeUpdate();
+        if(i==0)
+        {
+            System.out.println(i);
+            return false;
+        }
+        // insert entries into main attendance table from student details
+        ps=con.prepareStatement("select enrollment from student_details where yop=?");
+        ps.setString(1,yop);
+        ResultSet rs=ps.executeQuery();
+        if(rs==null)return false;
+        while(rs.next()){
+            ps=con.prepareStatement("insert into attendance(eno,yop,sem,month) values(?,?,?,?)");
+            ps.setString(1,rs.getString(1));
+            ps.setString(2,yop );
+            ps.setString(3,sem );
+            ps.setString(4,month);
+            
+            int j=ps.executeUpdate();
+            if (j==0)return false;
+         }
+        con.close();
+        return true;
+        
     }
      public static boolean updateResult(String sql, String dept) {
         try {
@@ -254,6 +316,7 @@ public class Utility {
                 System.out.print(list.size());
                 String sql = "insert into student_details values('" + list.get(0) + "','" + list.get(1) + "','" + list.get(2) + "','" + list.get(3) + "','" + list.get(4) + "','" + list.get(5) + "','" + list.get(6) + "','" + list.get(7) + "','" + list.get(8) + "','" + list.get(9) + "','" + list.get(10) + "','" + list.get(11) + "','" + list.get(12) + "','" + list.get(13) + "','" + list.get(14) + "','" + list.get(15) + "','" + list.get(16) + "','" + list.get(17) + "','" + list.get(18) + "','" + list.get(19) + "','" + list.get(20) + "','xyz','" + list.get(21) + "')";
                 stat.executeUpdate(sql);
+                
             }
             file.close();
             return true;

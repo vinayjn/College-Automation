@@ -1,3 +1,8 @@
+<%-- 
+    Document   : _feedMidsemResult
+    Created on : Apr 10, 2014, 8:18:07 PM
+    Author     : Stark
+--%>
 
 <%@page import="utility.Utility"%>
 <%@page import="java.util.ArrayList"%>
@@ -29,18 +34,14 @@
                     String sb3 = request.getParameter("sb3");
                     String sb4 = request.getParameter("sb4");
                     String sb5 = request.getParameter("sb5");
-                    String atkt=request.getParameter("atkt");
                     String enrollment = request.getParameter("enrollment");
-                    String cgpa=request.getParameter("cgpa");
-                    String sgpa=request.getParameter("sgpa");
-                    String sql = "update result_analysis set subject_one='"+sb1+
+                    String sql = "update mst_result_analysis set subject_one='"+sb1+
                             "',subject_two='"+sb2+
                             "',subject_three='"+sb3+
                             "',subject_four='"+sb4+
                             "',subject_five='"+sb5+
-                            "',cgpa='"+cgpa+
-                            "',sgpa='"+sgpa+
-                            "',atkt='"+atkt+
+                            "',semester='"+semester+
+                            "',yop='"+yop+
                             "' where enrollment='"+enrollment+
                             "' AND semester="+semester;
                     boolean fdetail = Utility.feedDetail(sql, session.getAttribute("dept").toString());
@@ -58,6 +59,9 @@
                 session.setAttribute("offset", offset);
             %>
             <form class="form-horizontal" method="POST">
+                <% if(offset<=1){ %>
+                <a href="setMaxMarks.jsp" onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=700,toolbar=1,resizable=0'); return false;" ><h2 class="text-danger text-center">Click Here Set Maximum Marks</h2></a>
+                <% } %>
                 <div class="col-md-12" >
                     <h3>Student Result Details</h3><hr/>
                     <div class="well col-md-12">
@@ -104,45 +108,10 @@
                         </div>
                     </div>
                     <div class="well col-md-12">
-                        <div class="col-md-4">
-                           <div class="row">
-                                <div class="col-md-2">    
-                                <label for="atkt" class=" control-label">ATKT</label>
-                                </div>
-                                 <div class="col-md-10">
-                                <input type="text" name="atkt" placeholder="mention subject codes" class="form-control"/>
-                                </div>
-                              </div> 
-                            
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="row">
-                                <div class="col-md-2">    
-                                <label for="cgpa" class=" control-label">CGPA</label>
-                                </div>
-                                    <div class="col-md-10">
-                                <input type="text" name="cgpa" class="form-control" required/>
-                                </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="row">
-                                <div class="col-md-2">    
-                                <label for="sgpa" class=" control-label">SGPA</label>
-                                </div>
-                                    <div class="col-md-10">
-                                <input type="text" name="sgpa" class="form-control" required/>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-12">
                             <div class="col-sm-6"></div>    
                             <div class="pull-right col-md-4">
-                                <button type="submit" formaction="_feedResult.jsp" class="btn btn-success">Feed </button>
+                                <button type="submit" formaction="_feedMidsemResult.jsp" class="btn btn-success">Feed </button>
                                 <button type="reset"  class="btn btn-danger">Cancel </button>
                             </div>
                         </div>
