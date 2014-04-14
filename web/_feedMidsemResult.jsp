@@ -4,6 +4,9 @@
     Author     : Stark
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="utility.Utility"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,12 +18,19 @@
             <%@include file="initcomps/navbar.jsp" %>
 
             <%
-                String yop, semester;
+                Connection con;
+                Statement stat;
+                ResultSet rs;
+                String yop, semester,sql;
                 if (request.getParameter("feeder") != null) {
                     yop = request.getParameter("yop");
                     session.setAttribute("yop", yop);
                     semester = request.getParameter("semester");
                     session.setAttribute("semester", semester);
+                    sql = "INSERT INTO mst_result_analysis (enrollment,semester,yop) SELECT enrollment,'"+semester+"','"+yop+"' FROM student_details where yop='"+yop+"'";
+                    con = Utility.openConnection("college_"+session.getAttribute("dept").toString());
+                    stat = con.createStatement();
+                    stat.executeUpdate(sql);
                 } else {
                     yop = (String) session.getAttribute("yop");
                     semester = (String) session.getAttribute("semester");
@@ -35,7 +45,7 @@
                     String sb4 = request.getParameter("sb4");
                     String sb5 = request.getParameter("sb5");
                     String enrollment = request.getParameter("enrollment");
-                    String sql = "update mst_result_analysis set subject_one='"+sb1+
+                    sql = "update mst_result_analysis set subject_one='"+sb1+
                             "',subject_two='"+sb2+
                             "',subject_three='"+sb3+
                             "',subject_four='"+sb4+

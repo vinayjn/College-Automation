@@ -14,10 +14,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -128,7 +128,7 @@ public class Utility {
         Statement stat;
         ResultSet rs;
         try {
-            String sql = "select name,enrollment from student_details where yop='" + yop + "' limit 1 offset " + offset;
+            String sql = "select name,enrollment from student_details where yop='" + yop + "' ORDER BY `name` limit 1 offset " + offset;
             stat = con.createStatement();
             rs = stat.executeQuery(sql);
             while (rs.next()) {
@@ -284,10 +284,8 @@ public class Utility {
             Connection con = Utility.openConnection("college_" + dept);
             Statement stat = con.createStatement();
             //Get the workbook instance for XLS file 
-            HSSFWorkbook workbook = new HSSFWorkbook(file);
-            //Get first sheet from the workbook
-            HSSFSheet sheet = workbook.getSheetAt(0);
-            //Iterate through each rows from first sheet
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = sheet.iterator();
             Row row = rowIterator.next();
             System.out.println();
@@ -316,7 +314,6 @@ public class Utility {
                 System.out.print(list.size());
                 String sql = "insert into student_details values('" + list.get(0) + "','" + list.get(1) + "','" + list.get(2) + "','" + list.get(3) + "','" + list.get(4) + "','" + list.get(5) + "','" + list.get(6) + "','" + list.get(7) + "','" + list.get(8) + "','" + list.get(9) + "','" + list.get(10) + "','" + list.get(11) + "','" + list.get(12) + "','" + list.get(13) + "','" + list.get(14) + "','" + list.get(15) + "','" + list.get(16) + "','" + list.get(17) + "','" + list.get(18) + "','" + list.get(19) + "','" + list.get(20) + "','xyz','" + list.get(21) + "')";
                 stat.executeUpdate(sql);
-                
             }
             file.close();
             return true;
@@ -324,5 +321,5 @@ public class Utility {
             e.printStackTrace();
             return false;
         }
-    }
+    }    
 }

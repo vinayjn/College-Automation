@@ -76,41 +76,6 @@ CREATE TABLE `attendance_lecture_count` (
 
 /*Data for the table `attendance_lecture_count` */
 
-/*Table structure for table `bkp_2010_student_details` */
-
-DROP TABLE IF EXISTS `bkp_2010_student_details`;
-
-CREATE TABLE `bkp_2010_student_details` (
-  `enrollment` varchar(20) NOT NULL,
-  `computer_code` varchar(20) DEFAULT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `gender` varchar(20) DEFAULT NULL,
-  `category` varchar(50) DEFAULT NULL,
-  `address` varchar(150) DEFAULT NULL,
-  `mobile_number` varchar(50) DEFAULT NULL,
-  `phone_number` varchar(50) DEFAULT NULL,
-  `parent_mobile` varchar(50) DEFAULT NULL,
-  `father_name` varchar(50) DEFAULT NULL,
-  `mother_name` varchar(50) DEFAULT NULL,
-  `local_guardian` varchar(50) DEFAULT NULL,
-  `local_guardian_number` varchar(50) DEFAULT NULL,
-  `emailid` varchar(50) DEFAULT NULL,
-  `dob` varchar(50) DEFAULT NULL,
-  `blood_group` varchar(50) DEFAULT NULL,
-  `10th` varchar(50) DEFAULT NULL,
-  `12th` varchar(50) DEFAULT NULL,
-  `diploma` varchar(50) DEFAULT NULL,
-  `qualifying_exam` varchar(50) DEFAULT NULL,
-  `qualifying_exam_marks` varchar(50) DEFAULT NULL,
-  `photo` varchar(50) DEFAULT NULL,
-  `yop` varchar(5) NOT NULL,
-  PRIMARY KEY (`enrollment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `bkp_2010_student_details` */
-
-insert  into `bkp_2010_student_details`(`enrollment`,`computer_code`,`name`,`gender`,`category`,`address`,`mobile_number`,`phone_number`,`parent_mobile`,`father_name`,`mother_name`,`local_guardian`,`local_guardian_number`,`emailid`,`dob`,`blood_group`,`10th`,`12th`,`diploma`,`qualifying_exam`,`qualifying_exam_marks`,`photo`,`yop`) values ('0808CS101061','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','xyz','2010'),('0808CS101063','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','xyz','2010'),('0808CS101064','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','xyz','2010'),('0808CS101065','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','xyz','2010');
-
 /*Table structure for table `faculty_details` */
 
 DROP TABLE IF EXISTS `faculty_details`;
@@ -260,8 +225,6 @@ CREATE TABLE `mst_result_analysis` (
 
 /*Data for the table `mst_result_analysis` */
 
-insert  into `mst_result_analysis`(`enrollment`,`subject_one`,`subject_two`,`subject_three`,`subject_four`,`subject_five`,`semester`,`yop`,`max_one`,`max_two`,`max_three`,`max_four`,`max_five`) values ('0808CS101065',NULL,NULL,NULL,NULL,NULL,'8','2014','45','80','60','14','25');
-
 /*Table structure for table `notices` */
 
 DROP TABLE IF EXISTS `notices`;
@@ -336,8 +299,6 @@ CREATE TABLE `result_analysis` (
 
 /*Data for the table `result_analysis` */
 
-insert  into `result_analysis`(`enrollment`,`cgpa`,`sgpa`,`atkt`,`subject_one`,`subject_two`,`subject_three`,`subject_four`,`subject_five`,`semester`,`yop`) values ('0808CS101059','7.88','6.50','cloud','A+','B+','C','D','F','8','2014'),('0808CS101060','8.88','9.01','','A+','A+','C','A+','A','8','2014'),('0808CS101062','6.03','8.50','NA','B+','A+','D','A+','C+','8','2014'),('0808CS101066','8.34','7.36','NA','A+','B','A+','A+','A+','8','2014');
-
 /*Table structure for table `student_details` */
 
 DROP TABLE IF EXISTS `student_details`;
@@ -371,8 +332,6 @@ CREATE TABLE `student_details` (
 
 /*Data for the table `student_details` */
 
-insert  into `student_details`(`enrollment`,`computer_code`,`name`,`gender`,`category`,`address`,`mobile_number`,`phone_number`,`parent_mobile`,`father_name`,`mother_name`,`local_guardian`,`local_guardian_number`,`emailid`,`dob`,`blood_group`,`10th`,`12th`,`diploma`,`qualifying_exam`,`qualifying_exam_marks`,`photo`,`yop`) values ('0808cs101059','20820','a','a','obc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2014'),('0808cs101060','20820','a','a','obc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2014'),('0808cs101062','20820','a','a','obc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2014'),('0808cs101066','20820','a','a','obc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2014');
-
 /*Table structure for table `subjects` */
 
 DROP TABLE IF EXISTS `subjects`;
@@ -388,7 +347,7 @@ CREATE TABLE `subjects` (
 
 /*Data for the table `subjects` */
 
-insert  into `subjects`(`semester`,`subject`,`code`,`type`,`yop`) values ('56','cloud','784','jbkbkl','2014'),('7','cloud','458','jbkbkl','2014'),('7','cloud','784','jbkbkl','2014'),('7','cloud','852','jbkbkl','2014'),('8','wireless','014','rikf','2014'),('8','web eng','123','theory','2014'),('8','soft','456','the','2014'),('8','network','789','thak','2014'),('8','cloud','852','jbkbkl','2014');
+insert  into `subjects`(`semester`,`subject`,`code`,`type`,`yop`) values ('8','wireless','014','rikf','2014'),('8','web eng','123','theory','2014'),('8','soft','456','the','2014'),('8','network','789','thak','2014'),('8','cloud','852','jbkbkl','2014');
 
 /*Table structure for table `timetable` */
 
