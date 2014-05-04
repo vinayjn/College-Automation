@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		
+		
+		<title>DataTables example</title>
+		<style type="text/css" title="currentStyle">
+			@import "media/css/demo_page.css";
+			@import "media/css/demo_table_jui.css";
+			@import "media/support/themes/smoothness/jquery-ui-1.8.4.custom.css";
+		</style>
+		<script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="media/js/jquery.dataTables.js"></script>
+	
+		<script type="text/javascript" charset="utf-8">
+		 var asInitVals = new Array();
+		 $(document).ready(function() {
+				/* Initialise the DataTable */
+				var oTable = $('#example').dataTable( {
+				  "bJQueryUI": true,
+					"sPaginationType": "full_numbers",
+					"oLanguage": {
+						"sSearch": "Search all columns:"
+					}
+				} );
+				
+					$("tfoot input").keyup( function () {
+					/* Filter on the column (the index) of this element */
+					oTable.fnFilter( this.value, $("tfoot input").index(this) );
+				} );
+				
+				
+				
+				/*
+				 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
+				 * the footer
+				 */
+				$("tfoot input").each( function (i) {
+					asInitVals[i] = this.value;
+				} );
+				
+				$("tfoot input").focus( function () {
+					if ( this.className == "search_init" )
+					{
+						this.className = "";
+						this.value = "";
+					}
+				} );
+				
+				$("tfoot input").blur( function (i) {
+					if ( this.value == "" )
+					{
+						this.className = "search_init";
+						this.value = asInitVals[$("tfoot input").index(this)];
+					}
+				} );
+				/* Add event listeners to the two range filtering inputs */
+				$('#min').keyup( function() { oTable.fnDraw(); } );
+				$('#max').keyup( function() { oTable.fnDraw(); } );
+				
+			
+			} );
+			
+		  /* Custom filtering function which will filter data in column four between two values */
+			$.fn.dataTableExt.afnFiltering.push(
+				function( oSettings, aData, iDataIndex ) {
+					var iMin = document.getElementById('min').value * 1;
+					var iMax = document.getElementById('max').value * 1;
+					
+					var cgpa = aData[8] == "-" ? 0 : aData[8]*1;
+					
+					if ( iMin == "" && iMax == "" )
+					{ 
+						return true;
+					}
+					else if ( iMin == "" && cgpa <= iMax )
+					{
+						return true;
+					}
+					else if ( iMin <= cgpa && "" == iMax )
+					{
+						return true;
+					}
+					else if ( iMin <= cgpa && cgpa <= iMax )
+					{
+						return true;
+					}
+					return false;
+				}
+			);
+		
+			
+			
+			
+		
+			
+			
+			
+			
+			
+				
+			
+		</script>
+	</head>
+	<body id="dt_example">
+		<div id="container">
+			<h2>Kooch Esi rahegi Bhiya Apni Table ki scheme :D ;)</h2>
+			<div class="demo_jui">
+			<table border="0" cellspacing="5" cellpadding="5">
+				<tr>
+					<td>Minimum CGPA:</td>
+					<td><input type="text" id="min" name="min"></td>
+				</tr>
+				<tr>
+					<td>Maximum CGPA:</td>
+					<td><input type="text" id="max" name="max"></td>
+				</tr>
+				
+			</table>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+	<thead>
+		<tr>
+			<th>Enrollment No.</th>
+			<th>Name</th>
+			<th>CS601</th>
+			<th>CS602</th>
+			<th>CS603</th>
+			<th>CS604</th>
+			<th>CS605</th>
+			<th>SGPA</th>
+			<th>CGPA</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101001</td>
+		<td>Abhilash Balwara</td>
+		<td class="center">C</td>
+		<td class="center">C+</td>
+		<td class="center">C</td>
+		<td class="center">B+</td>
+		<td class="center">C+</td>
+		<td class="center">6.50</td>
+		<td class="center">6.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101003</td>
+		<td>Ajay Patidar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">7.40</td>
+		<td class="center">7.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101004</td>
+		<td>Alpa Chhariya</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">7.80</td>
+		<td class="center">7.56</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101005</td>
+		<td>XYZ</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">3.50</td>
+		<td class="center">7.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101006</td>
+		<td>ABC</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101007</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101008</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">5.50</td>
+		<td class="center">6.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101009</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">6.50</td>
+		<td class="center">4.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101010td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101011</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">7.50</td>
+		<td class="center">7.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808cs101012</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">5.50</td>
+		<td class="center">4.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101013</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101014</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101015</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101016</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">5.4</td>
+		<td class="center">5.3</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">6.00</td>
+		<td class="center">6.36</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">8.50</td>
+		<td class="center">8.00</td>
+		</tr>
+		<tr class="gradeC">
+		<td>0808CS101048</td>
+		<td>Rahul Bhooteshwar</td>
+		<td class="center">A</td>
+		<td class="center">B+</td>
+		<td class="center">B</td>
+		<td class="center">B+</td>
+		<td class="center">A+</td>
+		<td class="center">7.36</td>
+		<td class="center">7.00</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th><input type="text" name="search_eno." placeholder="Search Enrollment" class="search_init" /></th>
+			<th><input type="text" name="search_students" placeholder="Search Students" class="search_init" /></th>
+			<th><input type="text" name="search_CS601" placeholder="Search CS601 grades" class="search_init" /></th>
+			<th><input type="text" name="search_CS602" placeholder="Search CS602 grades" class="search_init" /></th>
+			<th><input type="text" name="search_CS603" placeholder="Search CS603 grades" class="search_init" /></th>
+			<th><input type="text" name="search_CS604" placeholder="Search CS604 grades" class="search_init" /></th>
+			<th><input type="text" name="search_CS605" placeholder="Search CS605 grades" class="search_init" /></th>
+			<th><input type="text" name="search_sgpa" placeholder="Search SGPA" class="search_init" /></th>
+			<th><input type="text" name="search_cgpa" placeholder="Search CGPA" class="search_init" /></th>
+			
+		</tr>
+	</tfoot>
+</table>
+			</div>
+			<div class="spacer"></div>
+			
+			
+	
+			<style type="text/css">
+				@import "media/support/syntax/css/shCore.css";
+			</style>
+			<script type="text/javascript" language="javascript" src="media/support/syntax/js/shCore.js"></script>
+			
+		
+			
+			
+			
+			
+		</div>
+	</body>
+</html>
